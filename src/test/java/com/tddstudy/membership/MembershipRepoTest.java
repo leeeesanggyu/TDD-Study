@@ -1,6 +1,8 @@
 package com.tddstudy.membership;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -8,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
+@Slf4j
 public class MembershipRepoTest {
 
     @Autowired
@@ -19,10 +22,11 @@ public class MembershipRepoTest {
     }
 
     @Test
+    @DisplayName("Membership 가입")
     public void registerMembership() {
-        Membership membership = Membership.builder()
+        final Membership membership = Membership.builder()
                 .userId("salgu")
-                .kind("naver")
+                .kind(MembershipKindType.KAKAO)
                 .point(1000)
                 .build();
 
@@ -30,7 +34,26 @@ public class MembershipRepoTest {
 
         assertThat(result.getId()).isNotNull();
         assertThat(result.getUserId()).isEqualTo("salgu");
-        assertThat(result.getKind()).isEqualTo("naver");
+        assertThat(result.getKind()).isEqualTo(MembershipKindType.KAKAO);
         assertThat(result.getPoint()).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("Membership 조회")
+    public void findMembership() {
+        final Membership membership = Membership.builder()
+                .userId("salgu")
+                .kind(MembershipKindType.KAKAO)
+                .point(1000)
+                .build();
+
+        membershipRepo.save(membership);
+        Membership result = membershipRepo.findByUserIdAndKind(membership.getUserId(), membership.getKind());
+
+        assertThat(result.getId()).isNotNull();
+        assertThat(result.getUserId()).isEqualTo("salgu");
+        assertThat(result.getKind()).isEqualTo(MembershipKindType.KAKAO);
+        assertThat(result.getPoint()).isEqualTo(1000);
+
     }
 }
