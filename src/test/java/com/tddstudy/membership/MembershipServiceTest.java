@@ -12,9 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MembershipServiceTest {
@@ -25,21 +26,52 @@ public class MembershipServiceTest {
     private MembershipRepo membershipRepo;
 
     private final String userId = "userId";
-    private final MembershipKindType membershipType = MembershipKindType.NAVER;
+    private final MembershipKindType kindType = MembershipKindType.NAVER;
     private final Integer point = 10000;
+
+    private Membership membership() {
+        return Membership.builder()
+                .id(-1L)
+                .userId(userId)
+                .point(point)
+                .kind(MembershipKindType.KAKAO)
+                .build();
+    }
 
     @Test
     public void 멤버십등록실패_이미존재함() {
         // given
-        doReturn(Membership.builder().build()).when(membershipRepo).findByUserIdAndKind(userId, membershipType);
+        // membershipRepo.findByUserIdAndKind() 했을때 Membership객체를 반환합니다.
+        doReturn(Membership.builder().build()).when(membershipRepo).findByUserIdAndKind(userId, kindType);
 
         // when
         final MembershipException result = assertThrows(
-                MembershipException.class,
-                () -> target.addMembership(userId, membershipType, point)
+                MembershipException.class,  // 명시적으로 해줘야 하는듯
+                () -> target.addMembership(userId, kindType, point)
         );
 
         // then
         assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER);
+    }
+
+    @Test
+    public void 멤버쉽등록성공() {
+        //given
+        doReturn(null).when(membershipRepo).findByUserIdAndKind(userId, kindType);
+        doReturn(membership()).when(membershipRepo).save(any(Membership.class));
+
+        //when
+        final Membership result = target.addMembership(userId, kindType, point);
+
+        //then
+        assertThat(result.getId()).isNotNull();
+        assertThat(result.getUserId()).isEqualTo(userId);
+        assertThat(result.getKind()).isEqualTo(MembershipKindType.KAKAO);
+        assertThat(result.getPoint()).isEqualTo(10000);
+
+        // verify
+        verify(membershipRepo, times(1)).findByUserIdAndKind(userId, kindType);
+        verify(membershipRepo, times(1)).save(any(Membership.class));
+
     }
 }

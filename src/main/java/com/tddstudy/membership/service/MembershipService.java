@@ -19,6 +19,12 @@ public class MembershipService {
         if (result != null) {
             throw new MembershipException(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER);
         }
-        return null;
+
+        final Membership membership = Membership.builder()
+                .userId(userId)
+                .point(point)
+                .kind(kindType)
+                .build();
+        return membershipRepo.save(membership);
     }
 }
