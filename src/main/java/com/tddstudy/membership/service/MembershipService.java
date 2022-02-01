@@ -2,7 +2,7 @@ package com.tddstudy.membership.service;
 
 import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.entity.Membership;
-import com.tddstudy.membership.entity.MembershipKindType;
+import com.tddstudy.membership.util.MembershipKindType;
 import com.tddstudy.membership.exception.MembershipErrorResult;
 import com.tddstudy.membership.exception.MembershipException;
 import com.tddstudy.membership.repo.MembershipRepo;
@@ -31,9 +31,7 @@ public class MembershipService {
 
         return MembershipRes.builder()
                 .id(saveResult.getId())
-                .userId(saveResult.getUserId())
                 .kind(saveResult.getKind())
-                .point(saveResult.getPoint())
                 .build();
     }
 }

@@ -1,6 +1,6 @@
 package com.tddstudy.membership.dto;
 
-import com.tddstudy.membership.entity.MembershipKindType;
+import com.tddstudy.membership.util.MembershipKindType;
 import lombok.*;
 
 import javax.validation.constraints.Min;

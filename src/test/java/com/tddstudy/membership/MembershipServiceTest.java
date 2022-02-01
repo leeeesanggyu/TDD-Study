@@ -2,7 +2,7 @@ package com.tddstudy.membership;
 
 import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.entity.Membership;
-import com.tddstudy.membership.entity.MembershipKindType;
+import com.tddstudy.membership.util.MembershipKindType;
 import com.tddstudy.membership.exception.MembershipErrorResult;
 import com.tddstudy.membership.exception.MembershipException;
 import com.tddstudy.membership.repo.MembershipRepo;
@@ -66,9 +66,7 @@ public class MembershipServiceTest {
 
         //then
         assertThat(result.getId()).isNotNull();
-        assertThat(result.getUserId()).isEqualTo(userId);
         assertThat(result.getKind()).isEqualTo(MembershipKindType.KAKAO);
-        assertThat(result.getPoint()).isEqualTo(10000);
 
         // verify
         verify(membershipRepo, times(1)).findByUserIdAndKind(userId, kindType);

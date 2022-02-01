@@ -1,5 +1,6 @@
 package com.tddstudy.membership.entity;
 
+import com.tddstudy.membership.util.MembershipKindType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

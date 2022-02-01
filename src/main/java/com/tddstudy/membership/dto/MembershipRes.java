@@ -1,16 +1,15 @@
 package com.tddstudy.membership.dto;
 
-import com.tddstudy.membership.entity.MembershipKindType;
+import com.tddstudy.membership.util.MembershipKindType;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 @Builder
+@RequiredArgsConstructor
 public class MembershipRes {
 
-    private Long id;
-    private String userId;
-    private MembershipKindType kind;
-    private Integer point;
+    private final Long id;
+    private final MembershipKindType kind;
 }

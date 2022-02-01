@@ -1,10 +1,9 @@
 package com.tddstudy.membership;
 
 import com.tddstudy.membership.entity.Membership;
-import com.tddstudy.membership.entity.MembershipKindType;
+import com.tddstudy.membership.util.MembershipKindType;
 import com.tddstudy.membership.repo.MembershipRepo;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
