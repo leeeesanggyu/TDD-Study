@@ -24,8 +24,7 @@ public class MembershipRepoTest {
     }
 
     @Test
-    @DisplayName("Membership 가입")
-    public void registerMembership() {
+    public void 멤버쉽가입() {
         final Membership membership = Membership.builder()
                 .userId("salgu")
                 .kind(MembershipKindType.KAKAO)
@@ -41,8 +40,7 @@ public class MembershipRepoTest {
     }
 
     @Test
-    @DisplayName("Membership 조회")
-    public void findMembership() {
+    public void 멤버쉽조회() {
         final Membership membership = Membership.builder()
                 .userId("salgu")
                 .kind(MembershipKindType.KAKAO)

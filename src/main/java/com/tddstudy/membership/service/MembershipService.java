@@ -1,5 +1,6 @@
 package com.tddstudy.membership.service;
 
+import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.entity.Membership;
 import com.tddstudy.membership.entity.MembershipKindType;
 import com.tddstudy.membership.exception.MembershipErrorResult;
@@ -14,7 +15,7 @@ public class MembershipService {
 
     private final MembershipRepo membershipRepo;
 
-    public Membership addMembership(final String userId, final MembershipKindType kindType, final Integer point) {
+    public MembershipRes addMembership(final String userId, final MembershipKindType kindType, final Integer point) {
         final Membership result = membershipRepo.findByUserIdAndKind(userId, kindType);
         if (result != null) {
             throw new MembershipException(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER);
@@ -25,6 +26,14 @@ public class MembershipService {
                 .point(point)
                 .kind(kindType)
                 .build();
-        return membershipRepo.save(membership);
+
+        Membership saveResult = membershipRepo.save(membership);
+
+        return MembershipRes.builder()
+                .id(saveResult.getId())
+                .userId(saveResult.getUserId())
+                .kind(saveResult.getKind())
+                .point(saveResult.getPoint())
+                .build();
     }
 }

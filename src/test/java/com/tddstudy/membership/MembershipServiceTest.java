@@ -1,5 +1,6 @@
 package com.tddstudy.membership;
 
+import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.entity.Membership;
 import com.tddstudy.membership.entity.MembershipKindType;
 import com.tddstudy.membership.exception.MembershipErrorResult;
@@ -61,7 +62,7 @@ public class MembershipServiceTest {
         doReturn(membership()).when(membershipRepo).save(any(Membership.class));
 
         //when
-        final Membership result = target.addMembership(userId, kindType, point);
+        final MembershipRes result = target.addMembership(userId, kindType, point);
 
         //then
         assertThat(result.getId()).isNotNull();
