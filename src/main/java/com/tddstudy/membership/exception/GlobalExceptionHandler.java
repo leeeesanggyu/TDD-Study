@@ -1,5 +1,6 @@
 package com.tddstudy.membership.exception;
 
+import com.tddstudy.membership.controller.MembershipController;
 import com.tddstudy.membership.exception.MembershipErrorResult;
 import com.tddstudy.membership.exception.MembershipException;
 import lombok.Getter;
@@ -10,7 +11,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -18,7 +22,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+@ControllerAdvice
+public abstract class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
