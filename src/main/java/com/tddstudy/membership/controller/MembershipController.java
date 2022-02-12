@@ -1,5 +1,6 @@
 package com.tddstudy.membership.controller;
 
+import com.tddstudy.membership.dto.MembershipDetailRes;
 import com.tddstudy.membership.dto.MembershipReq;
 import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.exception.GlobalExceptionHandler;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static com.tddstudy.membership.util.MembershipConstants.USER_ID_HEADER;
 
@@ -27,6 +30,13 @@ public class MembershipController extends GlobalExceptionHandler{
     ) {
         MembershipRes membershipRes = membershipService.addMembership(userId, membershipReq.getKind(), membershipReq.getPoint());
         return ResponseEntity.status(HttpStatus.CREATED).body(membershipRes);
+    }
+
+    @PostMapping("/api/v1/membership/list")
+    public ResponseEntity<List<MembershipDetailRes>> getMembershipList (
+            @RequestHeader(USER_ID_HEADER) final String userId
+    ) {
+        return ResponseEntity.ok(membershipService.getMembershipList(userId));
     }
 }
 

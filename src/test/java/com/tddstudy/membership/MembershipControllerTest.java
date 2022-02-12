@@ -2,6 +2,7 @@ package com.tddstudy.membership;
 
 import com.google.gson.Gson;
 import com.tddstudy.membership.controller.MembershipController;
+import com.tddstudy.membership.dto.MembershipDetailRes;
 import com.tddstudy.membership.dto.MembershipReq;
 import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.util.MembershipKindType;
@@ -22,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import static com.tddstudy.membership.util.MembershipConstants.USER_ID_HEADER;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,7 +36,6 @@ public class MembershipControllerTest {
 
     private MockMvc mockMvc;
     private Gson gson;
-    static final String url = "/api/v1/membership";
 
     @InjectMocks
     private MembershipController target;
@@ -56,6 +57,7 @@ public class MembershipControllerTest {
     @Test
     public void 멤버쉽가입실패_사용자식별값이헤더에없음() throws Exception {
         //given
+        final String url = "/api/v1/membership";
 
         //when
         final ResultActions resultAction = mockMvc.perform(
@@ -70,6 +72,7 @@ public class MembershipControllerTest {
     @Test
     public void 멤버쉽가입실패_포인트null() throws Exception {
         //given
+        final String url = "/api/v1/membership";
 
         //when
         final ResultActions resultAction = mockMvc.perform(
@@ -85,6 +88,7 @@ public class MembershipControllerTest {
     @Test
     public void 멤버쉽가입실패_포인트음수() throws Exception {
         //given
+        final String url = "/api/v1/membership";
 
         //when
         final ResultActions resultAction = mockMvc.perform(
@@ -100,6 +104,7 @@ public class MembershipControllerTest {
     @Test
     public void 멤버쉽가입실패_멤버쉽종류null() throws Exception {
         //given
+        final String url = "/api/v1/membership";
 
         //when
         final ResultActions resultAction = mockMvc.perform(
@@ -125,6 +130,8 @@ public class MembershipControllerTest {
     @Test
     public void 멤버십등록실패_MemberService에서에러Throw() throws Exception {
         // given
+        final String url = "/api/v1/membership";
+
         doThrow(new MembershipException(MembershipErrorResult.DUPLICATED_MEMBERSHIP_REGISTER))
                 .when(membershipService)
                 .addMembership("12345", MembershipKindType.NAVER, 10000);
@@ -145,6 +152,8 @@ public class MembershipControllerTest {
     @Test
     public void 멤버쉽등록성공() throws Exception {
         // given
+        final String url = "/api/v1/membership";
+
         doReturn(
                 MembershipRes.builder()
                         .id(1L)
@@ -171,6 +180,27 @@ public class MembershipControllerTest {
 
         assertThat(res.getId()).isNotNull();
         assertThat(res.getKind()).isEqualTo(MembershipKindType.KAKAO);
+    }
+
+    @Test
+    public void 멤버십목록조회성공() throws Exception {
+        // given
+        final String url = "/api/v1/membership/list";
+
+        doReturn(Arrays.asList(
+                MembershipDetailRes.builder().build(),
+                MembershipDetailRes.builder().build(),
+                MembershipDetailRes.builder().build()
+        )).when(membershipService).getMembershipList("12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // then
+        resultActions.andExpect(status().isOk());
     }
 
 

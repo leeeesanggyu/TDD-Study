@@ -1,5 +1,6 @@
 package com.tddstudy.membership;
 
+import com.tddstudy.membership.dto.MembershipDetailRes;
 import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.entity.Membership;
 import com.tddstudy.membership.util.MembershipKindType;
@@ -12,6 +13,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -72,5 +76,18 @@ public class MembershipServiceTest {
         verify(membershipRepo, times(1)).findByUserIdAndKind(userId, kindType);
         verify(membershipRepo, times(1)).save(any(Membership.class));
 
+    }
+
+    @Test
+    public void 멤버쉽목록조회() {
+        doReturn(Arrays.asList(
+                Membership.builder().build(),
+                Membership.builder().build(),
+                Membership.builder().build()
+        )).when(membershipRepo).findAllByUserId(userId);
+
+        final List<MembershipDetailRes> result = target.getMembershipList(userId);
+
+        assertThat(result.size()).isEqualTo(3);
     }
 }
