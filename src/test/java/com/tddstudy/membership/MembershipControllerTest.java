@@ -5,6 +5,7 @@ import com.tddstudy.membership.controller.MembershipController;
 import com.tddstudy.membership.dto.MembershipDetailRes;
 import com.tddstudy.membership.dto.MembershipReq;
 import com.tddstudy.membership.dto.MembershipRes;
+import com.tddstudy.membership.entity.Membership;
 import com.tddstudy.membership.util.MembershipKindType;
 import com.tddstudy.membership.exception.MembershipErrorResult;
 import com.tddstudy.membership.exception.MembershipException;
@@ -195,13 +196,27 @@ public class MembershipControllerTest {
 
         // when
         final ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post(url)
+                MockMvcRequestBuilders.get(url)
                         .header(USER_ID_HEADER, "12345")
         );
 
         // then
         resultActions.andExpect(status().isOk());
     }
+
+    @Test
+    public void 멤버쉽조회실패_사용자식별값이헤더에없음() throws Exception {
+        //given
+        final String url = "/api/v1/membership/list";
+
+        //when
+        final ResultActions resultAction = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+        );
+        //then
+        resultAction.andExpect(status().isBadRequest());
+    }
+
 
 
 }

@@ -32,7 +32,7 @@ public class MembershipController extends GlobalExceptionHandler{
         return ResponseEntity.status(HttpStatus.CREATED).body(membershipRes);
     }
 
-    @PostMapping("/api/v1/membership/list")
+    @GetMapping("/api/v1/membership/list")
     public ResponseEntity<List<MembershipDetailRes>> getMembershipList (
             @RequestHeader(USER_ID_HEADER) final String userId
     ) {
