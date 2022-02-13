@@ -5,6 +5,7 @@ import com.tddstudy.membership.dto.MembershipReq;
 import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.exception.GlobalExceptionHandler;
 import com.tddstudy.membership.service.MembershipService;
+import com.tddstudy.membership.util.MembershipKindType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,6 +38,14 @@ public class MembershipController extends GlobalExceptionHandler{
             @RequestHeader(USER_ID_HEADER) final String userId
     ) {
         return ResponseEntity.ok(membershipService.getMembershipList(userId));
+    }
+
+    @GetMapping("/api/v1/membership")
+    public ResponseEntity<MembershipDetailRes> getMembershipDetail (
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @RequestParam final MembershipKindType kindType
+    ) {
+        return ResponseEntity.ok().body(membershipService.getMembershipDetail(userId, kindType));
     }
 }
 

@@ -50,4 +50,19 @@ public class MembershipService {
                 .build())
                 .collect(Collectors.toList());
     }
+
+    public MembershipDetailRes getMembershipDetail(final String userId, final MembershipKindType kindType) {
+        final Membership result = membershipRepo.findByUserIdAndKind(userId, kindType);
+
+        if (result == null) {
+            throw new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+        }
+
+        return MembershipDetailRes.builder()
+                .id(result.getId())
+                .userId(result.getUserId())
+                .kind(result.getKind())
+                .point(result.getPoint())
+                .build();
+    }
 }

@@ -39,7 +39,7 @@ public class MembershipServiceTest {
                 .id(-1L)
                 .userId(userId)
                 .point(point)
-                .kind(MembershipKindType.KAKAO)
+                .kind(MembershipKindType.NAVER)
                 .build();
     }
 
@@ -70,7 +70,7 @@ public class MembershipServiceTest {
 
         //then
         assertThat(result.getId()).isNotNull();
-        assertThat(result.getKind()).isEqualTo(MembershipKindType.KAKAO);
+        assertThat(result.getKind()).isEqualTo(MembershipKindType.NAVER);
 
         // verify
         verify(membershipRepo, times(1)).findByUserIdAndKind(userId, kindType);
@@ -89,5 +89,31 @@ public class MembershipServiceTest {
         final List<MembershipDetailRes> result = target.getMembershipList(userId);
 
         assertThat(result.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void 멤버쉽상세조회실패_null() {
+        doReturn(null)
+                .when(membershipRepo)
+                .findByUserIdAndKind(userId, kindType);
+
+        final MembershipException result = assertThrows(
+                MembershipException.class,
+                () -> target.getMembershipDetail(userId, kindType)
+        );
+
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+    }
+
+    @Test
+    public void 멤버쉽상세조회성공() {
+        doReturn(membership())
+                .when(membershipRepo)
+                .findByUserIdAndKind(userId, kindType);
+
+        MembershipDetailRes result = target.getMembershipDetail(userId, kindType);
+
+        assertThat(result.getUserId()).isEqualTo(userId);
+        assertThat(result.getKind()).isEqualTo(kindType);
     }
 }

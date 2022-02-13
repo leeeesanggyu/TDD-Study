@@ -217,6 +217,62 @@ public class MembershipControllerTest {
         resultAction.andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void 멤버쉽상세조회실패_사용자식별헤더값없음() throws Exception {
+        final String url = "/api/v1/membership";
 
+        final ResultActions perform = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+        );
+
+        perform.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버쉽상세조회실패_파라미터없음() throws Exception {
+        final String url = "/api/v1/membership";
+
+        final ResultActions perform = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .param("kindType", "empty")
+        );
+
+        perform.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버쉽상세조회실패_멤버쉽존재하지않음() throws Exception {
+        final String url = "/api/v1/membership";
+
+        doThrow(new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND))
+                .when(membershipService)
+                .getMembershipDetail("12345", MembershipKindType.KAKAO);
+
+        final ResultActions perform = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .param("kindType", MembershipKindType.KAKAO.name())
+        );
+
+        perform.andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void 멤버쉽상세조회성공() throws Exception {
+        final String url = "/api/v1/membership";
+
+        doReturn(MembershipDetailRes.builder().build())
+                .when(membershipService)
+                .getMembershipDetail("12345", MembershipKindType.KAKAO);
+
+        final ResultActions perform = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .param("kindType", MembershipKindType.KAKAO.name())
+        );
+
+        perform.andExpect(status().isOk());
+    }
 
 }
