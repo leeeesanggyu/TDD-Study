@@ -47,6 +47,15 @@ public class MembershipController extends GlobalExceptionHandler{
     ) {
         return ResponseEntity.ok().body(membershipService.getMembershipDetail(userId, kindType));
     }
+
+    @DeleteMapping("/api/v1/membership/{membershipId}")
+    public ResponseEntity<MembershipDetailRes> DeleteMembership (
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @PathVariable final Long membershipId
+    ) {
+        membershipService.deleteMembership(userId, membershipId);
+        return ResponseEntity.noContent().build();
+    }
 }
 
 

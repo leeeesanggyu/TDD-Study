@@ -92,4 +92,16 @@ public class MembershipRepoTest {
         // then
         assertThat(membershipList.size()).isEqualTo(2);
     }
+
+    @Test
+    public void 멤버쉽추가후삭제() {
+        final Membership membership = Membership.builder()
+                .userId("salgu")
+                .kind(MembershipKindType.KAKAO)
+                .point(1000)
+                .build();
+
+        final Membership saveMembership = membershipRepo.save(membership);
+        membershipRepo.deleteById(saveMembership.getId());
+    }
 }

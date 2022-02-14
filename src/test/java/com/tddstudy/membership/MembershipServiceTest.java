@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,6 +34,7 @@ public class MembershipServiceTest {
     private final String userId = "userId";
     private final MembershipKindType kindType = MembershipKindType.NAVER;
     private final Integer point = 10000;
+    private final Long membershipId = -1L;
 
     private Membership membership() {
         return Membership.builder()
@@ -115,5 +117,41 @@ public class MembershipServiceTest {
 
         assertThat(result.getUserId()).isEqualTo(userId);
         assertThat(result.getKind()).isEqualTo(kindType);
+    }
+
+    @Test
+    public void 멤버쉽삭제실패_없음() {
+        doReturn(Optional.empty())
+                .when(membershipRepo).findById(membershipId);
+
+        final MembershipException result = assertThrows(
+                MembershipException.class,
+                () -> target.deleteMembership(userId, membershipId)
+        );
+
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+    }
+
+    @Test
+    public void 멤버쉽삭제실패_본인아님() {
+        final Membership membership = membership();
+        doReturn(Optional.ofNullable(membership))
+                .when(membershipRepo).findById(membershipId);
+
+        final MembershipException result = assertThrows(
+                MembershipException.class,
+                () -> target.deleteMembership("no", membershipId)
+        );
+
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+    }
+
+    @Test
+    public void 멤버쉽삭제성공() {
+        final Membership membership = membership();
+        doReturn(Optional.ofNullable(membership))
+                .when(membershipRepo).findById(membershipId);
+
+        target.deleteMembership(userId, membershipId);
     }
 }
