@@ -4,14 +4,13 @@ import com.tddstudy.membership.dto.MembershipDetailRes;
 import com.tddstudy.membership.dto.MembershipRes;
 import com.tddstudy.membership.entity.Membership;
 import com.tddstudy.membership.util.MembershipKindType;
-import com.tddstudy.membership.exception.MembershipErrorResult;
-import com.tddstudy.membership.exception.MembershipException;
+import com.tddstudy.exception.MembershipErrorResult;
+import com.tddstudy.exception.MembershipException;
 import com.tddstudy.membership.repo.MembershipRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

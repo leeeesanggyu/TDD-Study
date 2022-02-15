@@ -1,8 +1,5 @@
-package com.tddstudy.membership.exception;
+package com.tddstudy.exception;
 
-import com.tddstudy.membership.controller.MembershipController;
-import com.tddstudy.membership.exception.MembershipErrorResult;
-import com.tddstudy.membership.exception.MembershipException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 

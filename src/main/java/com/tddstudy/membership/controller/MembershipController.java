@@ -3,12 +3,11 @@ package com.tddstudy.membership.controller;
 import com.tddstudy.membership.dto.MembershipDetailRes;
 import com.tddstudy.membership.dto.MembershipReq;
 import com.tddstudy.membership.dto.MembershipRes;
-import com.tddstudy.membership.exception.GlobalExceptionHandler;
+import com.tddstudy.exception.GlobalExceptionHandler;
 import com.tddstudy.membership.service.MembershipService;
 import com.tddstudy.membership.util.MembershipKindType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
