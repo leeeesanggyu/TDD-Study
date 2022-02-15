@@ -8,6 +8,7 @@ import com.tddstudy.exception.MembershipErrorResult;
 import com.tddstudy.exception.MembershipException;
 import com.tddstudy.membership.repo.MembershipRepo;
 import com.tddstudy.membership.service.MembershipService;
+import com.tddstudy.point.RatePointService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,6 +31,8 @@ public class MembershipServiceTest {
     private MembershipService target;
     @Mock
     private MembershipRepo membershipRepo;
+    @Mock
+    private RatePointService ratePointService;
 
     private final String userId = "userId";
     private final MembershipKindType kindType = MembershipKindType.NAVER;
@@ -153,5 +156,44 @@ public class MembershipServiceTest {
                 .when(membershipRepo).findById(membershipId);
 
         target.deleteMembership(userId, membershipId);
+    }
+
+    @Test
+    public void RatePointService_Null() {
+        assertThat(ratePointService).isNotNull();
+    }
+
+    @Test
+    public void 멤버쉽포인트적립실패_존재하지않음() {
+        doReturn(Optional.empty())
+                .when(membershipRepo).findById(membershipId);
+
+        final MembershipException result = assertThrows(
+                MembershipException.class,
+                () -> target.accumulateMembershipPoint(userId, membershipId, 10000)
+        );
+
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+    }
+
+    @Test
+    public void 멤버쉽포인트적립실패_본인아님() {
+        doReturn(Optional.of(membership()))
+                .when(membershipRepo).findById(membershipId);
+
+        final MembershipException result = assertThrows(
+                MembershipException.class,
+                () -> target.accumulateMembershipPoint("no", membershipId, 10000)
+        );
+
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+    }
+
+    @Test
+    public void 멤버쉽포인트적립성공() {
+        doReturn(Optional.of(membership()))
+                .when(membershipRepo).findById(membershipId);
+
+        target.accumulateMembershipPoint(userId, membershipId, 10000);
     }
 }
