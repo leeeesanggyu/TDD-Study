@@ -296,4 +296,39 @@ public class MembershipControllerTest {
         result.andExpect(status().is2xxSuccessful());
     }
 
+    @Test public void 멤버십적립실패_사용자식별값이헤더에없음() throws Exception {
+        final String url = "/api/v1/membership/-1/accumulate";
+
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .content(gson.toJson(membershipReq(10000, MembershipKindType.KAKAO)))
+                        .contentType(MediaType.APPLICATION_JSON) );
+
+        resultActions.andExpect(status().isBadRequest());
+    }
+    @Test
+    public void 멤버십적립실패_포인트가음수() throws Exception {
+        final String url = "/api/v1/membership/-1/accumulate";
+
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .content(gson.toJson(membershipReq(-1, MembershipKindType.KAKAO)))
+                        .contentType(MediaType.APPLICATION_JSON) );
+
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test public void 멤버십적립성공() throws Exception {
+        final String url = "/api/v1/membership/-1/accumulate";
+
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .content(gson.toJson(membershipReq(10000, MembershipKindType.KAKAO)))
+                        .contentType(MediaType.APPLICATION_JSON) );
+
+        resultActions.andExpect(status().is2xxSuccessful());
+    }
+
 }

@@ -55,6 +55,17 @@ public class MembershipController extends GlobalExceptionHandler{
         membershipService.deleteMembership(userId, membershipId);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/api/v1/membership/{id}/accumulate")
+    public ResponseEntity<Void> accumulateMembershipPoint(
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @PathVariable final Long id,
+            @RequestBody @Valid final MembershipReq membershipReq
+    ) {
+        membershipService.accumulateMembershipPoint(userId, id, membershipReq.getPoint());
+        return ResponseEntity.noContent().build();
+    }
+
 }
 
 
