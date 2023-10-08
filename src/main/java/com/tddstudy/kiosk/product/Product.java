@@ -2,6 +2,7 @@ package com.tddstudy.kiosk.product;
 
 import com.tddstudy.kiosk.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,12 @@ public class Product extends BaseEntity {
     private String name;
 
     private int price;
+
+    @Builder
+    public Product(ProductType type, ProductSellingType sellingType, String name, int price) {
+        this.type = type;
+        this.sellingType = sellingType;
+        this.name = name;
+        this.price = price;
+    }
 }
