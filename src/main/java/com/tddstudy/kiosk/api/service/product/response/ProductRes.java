@@ -1,12 +1,10 @@
 package com.tddstudy.kiosk.api.service.product.response;
 
-import com.tddstudy.kiosk.product.Product;
-import com.tddstudy.kiosk.product.ProductSellingType;
-import com.tddstudy.kiosk.product.ProductType;
+import com.tddstudy.kiosk.domain.product.Product;
+import com.tddstudy.kiosk.domain.product.ProductSellingType;
+import com.tddstudy.kiosk.domain.product.ProductType;
 import lombok.Builder;
 import lombok.Getter;
-
-import javax.persistence.*;
 
 @Getter
 public class ProductRes {

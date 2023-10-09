@@ -1,9 +1,9 @@
 package com.tddstudy.kiosk.api.service.product;
 
 import com.tddstudy.kiosk.api.service.product.response.ProductRes;
-import com.tddstudy.kiosk.product.Product;
-import com.tddstudy.kiosk.product.ProductRepository;
-import com.tddstudy.kiosk.product.ProductSellingType;
+import com.tddstudy.kiosk.domain.product.Product;
+import com.tddstudy.kiosk.domain.product.ProductRepository;
+import com.tddstudy.kiosk.domain.product.ProductSellingType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

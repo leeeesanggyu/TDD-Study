@@ -1,4 +1,4 @@
-package com.tddstudy.kiosk.product;
+package com.tddstudy.kiosk.domain.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +14,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      * where selling_type in ('?', '?');
      */
     List<Product> findAllBySellingTypeIn(List<ProductSellingType> sellingTypes);
+
+    List<Product> findAllByIdIn(List<Long> productId);
 }

@@ -1,4 +1,4 @@
-package com.tddstudy.kiosk.product;
+package com.tddstudy.kiosk.domain.product;
 
 import com.tddstudy.kiosk.BaseEntity;
 import lombok.AccessLevel;
@@ -28,7 +28,8 @@ public class Product extends BaseEntity {
     private int price;
 
     @Builder
-    public Product(ProductType type, ProductSellingType sellingType, String name, int price) {
+    public Product(Long id, ProductType type, ProductSellingType sellingType, String name, int price) {
+        this.id = id;
         this.type = type;
         this.sellingType = sellingType;
         this.name = name;

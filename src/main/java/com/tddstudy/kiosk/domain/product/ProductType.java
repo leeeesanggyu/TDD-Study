@@ -1,4 +1,4 @@
-package com.tddstudy.kiosk.product;
+package com.tddstudy.kiosk.domain.product;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
