@@ -18,9 +18,9 @@ class OrderTest {
     @Test
     void calculateTotalPrice() {
         List<Product> products = List.of(
-                createProduct(1L, 1000),
-                createProduct(2L, 2000),
-                createProduct(3L, 3000)
+                createProduct("001", 1000),
+                createProduct("002", 2000),
+                createProduct("003", 3000)
         );
 
         Order order = Order.create(products, LocalDateTime.now());
@@ -32,9 +32,9 @@ class OrderTest {
     @Test
     void orderInit() {
         List<Product> products = List.of(
-                createProduct(1L, 1000),
-                createProduct(2L, 2000),
-                createProduct(3L, 3000)
+                createProduct("001", 1000),
+                createProduct("002", 2000),
+                createProduct("003", 3000)
         );
 
         Order order = Order.create(products, LocalDateTime.now());
@@ -48,9 +48,9 @@ class OrderTest {
         LocalDateTime registeredDateTime = LocalDateTime.now();
 
         List<Product> products = List.of(
-                createProduct(1L, 1000),
-                createProduct(2L, 2000),
-                createProduct(3L, 3000)
+                createProduct("001", 1000),
+                createProduct("002", 2000),
+                createProduct("003", 3000)
         );
 
         Order order = Order.create(products, registeredDateTime);
@@ -58,9 +58,9 @@ class OrderTest {
         Assertions.assertThat(order.getRegisteredDateTime()).isEqualTo(registeredDateTime);
     }
 
-    private Product createProduct(Long id, int price) {
+    private Product createProduct(String productNumber, int price) {
         return Product.builder()
-                .id(id)
+                .productNumber(productNumber)
                 .type(ProductType.HANDMADE)
                 .sellingType(ProductSellingType.SELLING)
                 .name("아메리카노")

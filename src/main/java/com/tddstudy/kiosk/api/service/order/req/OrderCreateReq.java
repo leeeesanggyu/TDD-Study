@@ -2,15 +2,17 @@ package com.tddstudy.kiosk.api.service.order.req;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class OrderCreateReq {
-    private List<Long> productId;
+    private List<String> productNumbers;
 
     @Builder
-    private OrderCreateReq(List<Long> productId) {
-        this.productId = productId;
+    private OrderCreateReq(List<String> productNumbers) {
+        this.productNumbers = productNumbers;
     }
 }

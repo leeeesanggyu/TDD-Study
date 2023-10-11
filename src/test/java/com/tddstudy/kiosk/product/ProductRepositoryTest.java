@@ -9,13 +9,14 @@ import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 @ActiveProfiles("test")
-@SpringBootTest
+@DataJpaTest
 class ProductRepositoryTest {
 
     @Autowired
@@ -25,18 +26,21 @@ class ProductRepositoryTest {
     @Test
     void findAllBySellingTypeIn() {
         Product americano = Product.builder()
+                .productNumber("001")
                 .type(ProductType.HANDMADE)
                 .sellingType(ProductSellingType.SELLING)
                 .name("아메리카노")
                 .price(2000)
                 .build();
         Product cafeLatte = Product.builder()
+                .productNumber("002")
                 .type(ProductType.BOTTLE)
                 .sellingType(ProductSellingType.HOLD)
                 .name("카페라떼")
                 .price(3000)
                 .build();
         Product soboro = Product.builder()
+                .productNumber("003")
                 .type(ProductType.BAKERY)
                 .sellingType(ProductSellingType.STOP_SELLING)
                 .name("소보로빵")
@@ -48,10 +52,10 @@ class ProductRepositoryTest {
                 productRepository.findAllBySellingTypeIn(List.of(ProductSellingType.SELLING, ProductSellingType.HOLD));
 
         Assertions.assertThat(products).hasSize(2)
-                .extracting("id", "sellingType", "name")
+                .extracting("productNumber", "sellingType", "name")
                 .containsExactlyInAnyOrder(
-                        Tuple.tuple(1L, ProductSellingType.SELLING, "아메리카노"),
-                        Tuple.tuple(2L, ProductSellingType.HOLD, "카페라떼")
+                        Tuple.tuple("001", ProductSellingType.SELLING, "아메리카노"),
+                        Tuple.tuple("002", ProductSellingType.HOLD, "카페라떼")
                 );
     }
 
@@ -59,21 +63,21 @@ class ProductRepositoryTest {
     @Test
     void findAllByIdIn() {
         Product americano = Product.builder()
-                .id(1L)
+                .productNumber("001")
                 .type(ProductType.HANDMADE)
                 .sellingType(ProductSellingType.SELLING)
                 .name("아메리카노")
                 .price(2000)
                 .build();
         Product cafeLatte = Product.builder()
-                .id(2L)
+                .productNumber("002")
                 .type(ProductType.BOTTLE)
                 .sellingType(ProductSellingType.HOLD)
                 .name("카페라떼")
                 .price(3000)
                 .build();
         Product soboro = Product.builder()
-                .id(3L)
+                .productNumber("003")
                 .type(ProductType.BAKERY)
                 .sellingType(ProductSellingType.STOP_SELLING)
                 .name("소보로빵")
@@ -81,10 +85,10 @@ class ProductRepositoryTest {
                 .build();
         productRepository.saveAll(List.of(americano, cafeLatte, soboro));
 
-        List<Product> products = productRepository.findAllByIdIn(List.of(1L, 2L));
+        List<Product> products = productRepository.findAllByProductNumberIn(List.of("001", "002"));
 
         Assertions.assertThat(products).hasSize(2)
-                .extracting("id")
-                .containsExactlyInAnyOrder(1L, 2L);
+                .extracting("productNumber")
+                .containsExactlyInAnyOrder("001", "002");
     }
 }
