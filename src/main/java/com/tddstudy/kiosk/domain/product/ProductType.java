@@ -3,6 +3,8 @@ package com.tddstudy.kiosk.domain.product;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @RequiredArgsConstructor
 public enum ProductType {
@@ -13,4 +15,9 @@ public enum ProductType {
     ;
 
     private final String text;
+
+    public static boolean containsStockType(ProductType productType) {
+        return List.of(ProductType.BOTTLE, ProductType.BAKERY)
+                .contains(productType);
+    }
 }
