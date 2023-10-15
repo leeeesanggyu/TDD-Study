@@ -20,8 +20,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/api/v1/products/selling")
-    public List<ProductRes> getSellingProducts() {
-        return productService.getSellingProducts();
+    public ApiResponse<List<ProductRes>> getSellingProducts() {
+        return ApiResponse.ok(productService.getSellingProducts());
     }
 
     @PostMapping("/api/v1/products/new")
