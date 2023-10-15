@@ -42,7 +42,7 @@ class ProductServiceTest {
 
         ProductCreateReq productCreateReq = createProductCreateReq();
 
-        ProductRes productRes = productService.createProduct(productCreateReq);
+        ProductRes productRes = productService.createProduct(productCreateReq.toServiceReq());
 
         Assertions.assertThat(productRes)
                 .extracting("productNumber", "type", "sellingType", "name", "price")
@@ -55,7 +55,7 @@ class ProductServiceTest {
         final String targetProductNumber = "001";
         ProductCreateReq productCreateReq = createProductCreateReq();
 
-        ProductRes productRes = productService.createProduct(productCreateReq);
+        ProductRes productRes = productService.createProduct(productCreateReq.toServiceReq());
 
         Assertions.assertThat(productRes)
                 .extracting("productNumber", "type", "sellingType", "name", "price")

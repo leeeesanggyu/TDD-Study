@@ -1,6 +1,7 @@
 package com.tddstudy.kiosk.api.service.product;
 
 import com.tddstudy.kiosk.api.controller.product.req.ProductCreateReq;
+import com.tddstudy.kiosk.api.service.product.req.ProductCreateServiceReq;
 import com.tddstudy.kiosk.api.service.product.res.ProductRes;
 import com.tddstudy.kiosk.domain.product.Product;
 import com.tddstudy.kiosk.domain.product.ProductRepository;
@@ -28,10 +29,10 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductRes createProduct(ProductCreateReq productCreateReq) {
+    public ProductRes createProduct(ProductCreateServiceReq productCreateServiceReq) {
         String productNumber = createNextProductNumber();
 
-        Product product = productCreateReq.of(productNumber);
+        Product product = productCreateServiceReq.of(productNumber);
         Product savedProduct = productRepository.save(product);
         return ProductRes.of(savedProduct);
     }
