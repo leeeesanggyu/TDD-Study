@@ -1,4 +1,4 @@
-package com.tddstudy.kiosk.api.service.order.req;
+package com.tddstudy.kiosk.api.controller.order.req;
 
 import lombok.Builder;
 import lombok.Getter;

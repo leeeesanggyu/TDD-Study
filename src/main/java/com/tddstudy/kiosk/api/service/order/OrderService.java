@@ -1,6 +1,6 @@
 package com.tddstudy.kiosk.api.service.order;
 
-import com.tddstudy.kiosk.api.service.order.req.OrderCreateReq;
+import com.tddstudy.kiosk.api.controller.order.req.OrderCreateReq;
 import com.tddstudy.kiosk.api.service.order.res.OrderRes;
 import com.tddstudy.kiosk.domain.order.Order;
 import com.tddstudy.kiosk.domain.order.OrderRepository;

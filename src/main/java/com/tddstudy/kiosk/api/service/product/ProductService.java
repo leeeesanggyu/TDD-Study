@@ -1,6 +1,6 @@
 package com.tddstudy.kiosk.api.service.product;
 
-import com.tddstudy.kiosk.api.service.product.req.ProductCreateReq;
+import com.tddstudy.kiosk.api.controller.product.req.ProductCreateReq;
 import com.tddstudy.kiosk.api.service.product.res.ProductRes;
 import com.tddstudy.kiosk.domain.product.Product;
 import com.tddstudy.kiosk.domain.product.ProductRepository;

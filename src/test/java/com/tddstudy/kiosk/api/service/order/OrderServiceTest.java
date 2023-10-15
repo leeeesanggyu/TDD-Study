@@ -1,6 +1,6 @@
 package com.tddstudy.kiosk.api.service.order;
 
-import com.tddstudy.kiosk.api.service.order.req.OrderCreateReq;
+import com.tddstudy.kiosk.api.controller.order.req.OrderCreateReq;
 import com.tddstudy.kiosk.api.service.order.res.OrderRes;
 import com.tddstudy.kiosk.domain.order.OrderRepository;
 import com.tddstudy.kiosk.domain.orderproduct.OrderProductRepository;
@@ -18,12 +18,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 //@Transactional
 @ActiveProfiles("test")

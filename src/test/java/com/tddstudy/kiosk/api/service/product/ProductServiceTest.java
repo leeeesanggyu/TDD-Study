@@ -1,6 +1,6 @@
 package com.tddstudy.kiosk.api.service.product;
 
-import com.tddstudy.kiosk.api.service.product.req.ProductCreateReq;
+import com.tddstudy.kiosk.api.controller.product.req.ProductCreateReq;
 import com.tddstudy.kiosk.api.service.product.res.ProductRes;
 import com.tddstudy.kiosk.domain.product.Product;
 import com.tddstudy.kiosk.domain.product.ProductRepository;
@@ -15,8 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
