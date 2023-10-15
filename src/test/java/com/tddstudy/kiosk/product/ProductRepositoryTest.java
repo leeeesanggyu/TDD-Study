@@ -25,27 +25,9 @@ class ProductRepositoryTest {
     @DisplayName("원하는 판매상태를 가진 상품들을 조회한다.")
     @Test
     void findAllBySellingTypeIn() {
-        Product americano = Product.builder()
-                .productNumber("001")
-                .type(ProductType.HANDMADE)
-                .sellingType(ProductSellingType.SELLING)
-                .name("아메리카노")
-                .price(2000)
-                .build();
-        Product cafeLatte = Product.builder()
-                .productNumber("002")
-                .type(ProductType.BOTTLE)
-                .sellingType(ProductSellingType.HOLD)
-                .name("카페라떼")
-                .price(3000)
-                .build();
-        Product soboro = Product.builder()
-                .productNumber("003")
-                .type(ProductType.BAKERY)
-                .sellingType(ProductSellingType.STOP_SELLING)
-                .name("소보로빵")
-                .price(3500)
-                .build();
+        Product americano = createProduct("001", ProductType.HANDMADE, ProductSellingType.SELLING, "아메리카노", 2000);
+        Product cafeLatte = createProduct("002", ProductType.BOTTLE, ProductSellingType.HOLD, "카페라떼", 3000);
+        Product soboro = createProduct("003", ProductType.BAKERY, ProductSellingType.STOP_SELLING, "소보로빵", 3500);
         productRepository.saveAll(List.of(americano, cafeLatte, soboro));
 
         List<Product> products =
@@ -62,27 +44,9 @@ class ProductRepositoryTest {
     @DisplayName("상품번호 리스트로 상품을 조회한다.")
     @Test
     void findAllByIdIn() {
-        Product americano = Product.builder()
-                .productNumber("001")
-                .type(ProductType.HANDMADE)
-                .sellingType(ProductSellingType.SELLING)
-                .name("아메리카노")
-                .price(2000)
-                .build();
-        Product cafeLatte = Product.builder()
-                .productNumber("002")
-                .type(ProductType.BOTTLE)
-                .sellingType(ProductSellingType.HOLD)
-                .name("카페라떼")
-                .price(3000)
-                .build();
-        Product soboro = Product.builder()
-                .productNumber("003")
-                .type(ProductType.BAKERY)
-                .sellingType(ProductSellingType.STOP_SELLING)
-                .name("소보로빵")
-                .price(3500)
-                .build();
+        Product americano = createProduct("001", ProductType.HANDMADE, ProductSellingType.SELLING, "아메리카노", 2000);
+        Product cafeLatte = createProduct("002", ProductType.BOTTLE, ProductSellingType.HOLD, "카페라떼", 3000);
+        Product soboro = createProduct("003", ProductType.BAKERY, ProductSellingType.STOP_SELLING, "소보로빵", 3500);
         productRepository.saveAll(List.of(americano, cafeLatte, soboro));
 
         List<Product> products = productRepository.findAllByProductNumberIn(List.of("001", "002"));
@@ -90,5 +54,40 @@ class ProductRepositoryTest {
         Assertions.assertThat(products).hasSize(2)
                 .extracting("productNumber")
                 .containsExactlyInAnyOrder("001", "002");
+    }
+
+    @DisplayName("가장 마지막으로 저장한 상품의 상품번호를 조회한다.")
+    @Test
+    void findLatestProduct() {
+        final String targetProductNumber = "003";
+
+        Product americano = createProduct("001", ProductType.HANDMADE, ProductSellingType.SELLING, "아메리카노", 2000);
+        Product cafeLatte = createProduct("002", ProductType.BOTTLE, ProductSellingType.HOLD, "카페라떼", 3000);
+        Product soboro = createProduct(targetProductNumber, ProductType.BAKERY, ProductSellingType.STOP_SELLING, "소보로빵", 3500);
+        productRepository.saveAll(List.of(americano, cafeLatte, soboro));
+
+        String latestProductNumber = productRepository.findLatestProductNumber()
+                .orElse("0");
+
+        Assertions.assertThat(latestProductNumber).isEqualTo(targetProductNumber);
+    }
+
+    @DisplayName("가장 마지막으로 저장한 상품의 상품번호를 조회할때 상품이 없는 경우 '000' 을 반환한다.")
+    @Test
+    void findLatestProductNull() {
+        String latestProductNumber = productRepository.findLatestProductNumber()
+                .orElse("000");
+
+        Assertions.assertThat(latestProductNumber).isEqualTo("000");
+    }
+
+    private Product createProduct(String targetProductNumber, ProductType bakery, ProductSellingType sellingType, String name, int price) {
+        return Product.builder()
+                .productNumber(targetProductNumber)
+                .type(bakery)
+                .sellingType(sellingType)
+                .name(name)
+                .price(price)
+                .build();
     }
 }

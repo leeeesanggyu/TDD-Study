@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Transactional
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -28,6 +28,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final StockRepository stockRepository;
 
+    @Transactional
     public OrderRes createOrder(OrderCreateReq orderCreateReq, LocalDateTime registeredDateTime) {
         List<Product> duplicateProducts = findProductsBy(orderCreateReq);
 

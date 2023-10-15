@@ -1,6 +1,6 @@
 package com.tddstudy.kiosk.api.service.order.res;
 
-import com.tddstudy.kiosk.api.service.product.response.ProductRes;
+import com.tddstudy.kiosk.api.service.product.res.ProductRes;
 import com.tddstudy.kiosk.domain.order.Order;
 import lombok.Builder;
 import lombok.Getter;

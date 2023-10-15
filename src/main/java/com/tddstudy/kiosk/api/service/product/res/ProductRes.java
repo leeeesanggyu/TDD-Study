@@ -1,4 +1,4 @@
-package com.tddstudy.kiosk.api.service.product.response;
+package com.tddstudy.kiosk.api.service.product.res;
 
 import com.tddstudy.kiosk.domain.product.Product;
 import com.tddstudy.kiosk.domain.product.ProductSellingType;

@@ -1,6 +1,7 @@
 package com.tddstudy.kiosk.domain.product;
 
 import com.tddstudy.kiosk.BaseEntity;
+import com.tddstudy.kiosk.api.service.product.res.ProductRes;
 import lombok.*;
 
 import javax.persistence.*;
