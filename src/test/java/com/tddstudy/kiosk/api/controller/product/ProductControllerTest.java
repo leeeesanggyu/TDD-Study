@@ -1,6 +1,7 @@
 package com.tddstudy.kiosk.api.controller.product;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tddstudy.kiosk.ControllerTestSupport;
 import com.tddstudy.kiosk.api.service.product.ProductService;
 import com.tddstudy.kiosk.api.controller.product.req.ProductCreateReq;
 import com.tddstudy.kiosk.api.service.product.res.ProductRes;
@@ -26,18 +27,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ActiveProfiles("test")
-@WebMvcTest(controllers = ProductController.class)  // Controller 테스트 전용 어노테이션
-class ProductControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
-    private ProductService productService;
+class ProductControllerTest extends ControllerTestSupport {
 
     @DisplayName("새로운 상품을 등록한다.")
     @Test

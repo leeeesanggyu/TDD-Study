@@ -1,5 +1,6 @@
 package com.tddstudy.kiosk.domain.order;
 
+import com.tddstudy.kiosk.IntegrationTestSupport;
 import com.tddstudy.kiosk.api.controller.order.req.OrderCreateReq;
 import com.tddstudy.kiosk.api.service.order.OrderService;
 import com.tddstudy.kiosk.api.service.order.res.OrderRes;
@@ -27,9 +28,7 @@ import java.util.Optional;
 import static com.tddstudy.kiosk.domain.order.OrderStatus.COMPLETED;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class OrderRepositoryTest {
+class OrderRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     OrderRepository orderRepository;

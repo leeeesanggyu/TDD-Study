@@ -1,5 +1,6 @@
 package com.tddstudy.kiosk.api.service.order;
 
+import com.tddstudy.kiosk.IntegrationTestSupport;
 import com.tddstudy.kiosk.api.controller.order.req.OrderCreateReq;
 import com.tddstudy.kiosk.api.service.order.res.OrderRes;
 import com.tddstudy.kiosk.client.mail.MailClient;
@@ -29,9 +30,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class OrderStatisticsServiceTest {
+class OrderStatisticsServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private OrderStatisticsService orderStatisticsService;
@@ -51,8 +50,8 @@ class OrderStatisticsServiceTest {
     @Autowired
     MailSendHistoryRepository mailSendHistoryRepository;
 
-    @MockBean
-    MailClient mailClient;
+//    @MockBean
+//    MailClient mailClient;
 
     @AfterEach
     void tearDown() {

@@ -1,5 +1,6 @@
 package com.tddstudy.kiosk.domain.stock;
 
+import com.tddstudy.kiosk.IntegrationTestSupport;
 import com.tddstudy.kiosk.domain.product.Product;
 import com.tddstudy.kiosk.domain.product.ProductSellingType;
 import com.tddstudy.kiosk.domain.product.ProductType;
@@ -14,8 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-class StockRepositoryTest {
+class StockRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     StockRepository stockRepository;
@@ -72,6 +72,6 @@ class StockRepositoryTest {
 
         Assertions.assertThatThrownBy(() -> stock.deductionQuantity(deductionQuantity))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("재고보다 많은 수량만큼 차감하여 예외가 발생했다.");
+                .hasMessage("재고보다 많은 수량만큼 차감하여 예외가 발생했습니다.");
     }
 }

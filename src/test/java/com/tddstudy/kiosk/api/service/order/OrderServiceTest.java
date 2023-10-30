@@ -1,7 +1,9 @@
 package com.tddstudy.kiosk.api.service.order;
 
+import com.tddstudy.kiosk.IntegrationTestSupport;
 import com.tddstudy.kiosk.api.controller.order.req.OrderCreateReq;
 import com.tddstudy.kiosk.api.service.order.res.OrderRes;
+import com.tddstudy.kiosk.domain.order.Order;
 import com.tddstudy.kiosk.domain.order.OrderRepository;
 import com.tddstudy.kiosk.domain.orderproduct.OrderProductRepository;
 import com.tddstudy.kiosk.domain.product.Product;
@@ -22,10 +24,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDateTime;
 import java.util.List;
 
-//@Transactional
-@ActiveProfiles("test")
-@SpringBootTest
-class OrderServiceTest {
+class OrderServiceTest extends IntegrationTestSupport {
 
     @Autowired
     OrderService orderService;

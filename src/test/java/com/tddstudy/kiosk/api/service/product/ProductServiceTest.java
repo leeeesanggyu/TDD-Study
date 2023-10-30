@@ -1,5 +1,6 @@
 package com.tddstudy.kiosk.api.service.product;
 
+import com.tddstudy.kiosk.IntegrationTestSupport;
 import com.tddstudy.kiosk.api.controller.product.req.ProductCreateReq;
 import com.tddstudy.kiosk.api.service.product.res.ProductRes;
 import com.tddstudy.kiosk.domain.product.Product;
@@ -16,9 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
-@ActiveProfiles("test")
-@SpringBootTest
-class ProductServiceTest {
+class ProductServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private ProductService productService;
